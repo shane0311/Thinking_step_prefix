@@ -8,9 +8,9 @@ import torch
 
 from vllm import LLM, SamplingParams
 from transformers import AutoTokenizer
-sys.path.append(os.path.join(os.path.dirname(__file__), "utils"))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
-from generate_prompts import ciritique_last_generation, ciritique_last_generation_math
+from utils.generate_prompts import ciritique_last_generation, ciritique_last_generation_math
 import random, time
 
 random_seed = int(time.time() * 1000) % (2**31)

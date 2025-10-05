@@ -1,12 +1,26 @@
 import os
 import json
 import numpy as np
-import re
 import argparse
 import time
+import sys
+import torch
 
 from vllm import LLM, SamplingParams
 from transformers import AutoTokenizer
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
+
+from utils.generate_prompts import ciritique_last_generation, ciritique_last_generation_math
+import random, time
+
+random_seed = int(time.time() * 1000) % (2**31)
+
+random.seed(random_seed)
+np.random.seed(random_seed)
+torch.manual_seed(random_seed)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed(random_seed)
+    torch.cuda.manual_seed_all(random_seed)
 
 
 def setup_model_and_tokenizer(model_path, gpu_mem):
