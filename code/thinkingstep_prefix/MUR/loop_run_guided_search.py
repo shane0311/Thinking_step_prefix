@@ -7,13 +7,13 @@ if __name__ == "__main__":
     verify_nums = [1]
     scaling_rates = [0.9]
     thinking_step_prefix_len = [2,4,8,16,32,64]  # 0 for vanilla CoT
-    iterations = [1,2,3]
+    iterations = [1]
 
     # Where guided_search-mur.py writes results:
     # /home/pw58/efficient_reasoning/MUR/res/{file_name}.json
-    RES_ROOT = Path("../thinking_step_prefix")
+    RES_ROOT = Path("thinking_step_prefix")
 
-    SCRIPT = "guided_search-mur_thinkingstep_prefix.py"
+    SCRIPT = "code/thinkingstep_prefix/MUR/guided_search-mur_thinkingstep_prefix.py"
 
     failures = []
 
@@ -21,7 +21,7 @@ if __name__ == "__main__":
         for cand in candidates:
             for prefix_len in thinking_step_prefix_len:
                 for scale in scaling_rates:
-                    rel_file_stem = f"guided_search-mur/aime2025/1.7B/cand{cand}/{i}/preifx_len_{prefix_len}"
+                    rel_file_stem = f"guided_search-mur/gpqa_diamond/1.7B/cand{cand}/{i}/preifx_len_{prefix_len}"
                     out_json = RES_ROOT / f"{rel_file_stem}.json"
 
                     # Ensure the parent directory exists before running
@@ -33,13 +33,13 @@ if __name__ == "__main__":
                         continue
 
                     cmd = [
-                        "python", SCRIPT,
-                        "--data_path", "../data/aime2025_test.json",
+                        "python3", SCRIPT,
+                        "--data_path", "data/gpqa_diamond_test.json",
                         "--candidate_num", str(cand),
                         "--verify_num", str(1),
                         "--thinking_step_prefix_length", str(prefix_len),
                         "--scaling_rate", str(scale),
-                        "--aim_gpu", str(6),  # keep your current behavior
+                        "--aim_gpu", str(0),  # keep your current behavior
                         "--file_name", rel_file_stem,  # script will add /res/ prefix and .json
                         "--policy", "Qwen/Qwen3-1.7B",
                     ]

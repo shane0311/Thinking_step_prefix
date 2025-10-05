@@ -10,9 +10,9 @@ if __name__ == "__main__":
     iterations = [1,2,3]
 
     # /home/pw58/efficient_reasoning/MUR/res/{file_name}.json
-    RES_ROOT = Path("../thinking_step_prefix")
+    RES_ROOT = Path("thinking_step_prefix")
 
-    SCRIPT = "llm_as_a_critic-per_step_scale_thinkingstep_prefix.py"
+    SCRIPT = "code/thinkingstep_prefix/MUR/llm_as_a_critic-per_step_scale_thinkingstep_prefix.py"
 
     failures = []
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
                 cmd = [
                     "python", SCRIPT,
-                    "--data_path", "../data/gpqa_diamond_test.json",
+                    "--data_path", "data/gpqa_diamond_test.json",
                     "--thinking_step_prefix_length", str(prefix_len),
                     "--scaling_rate", str(scale),
                     "--aim_gpu", str(1),  # keep your current behavior
