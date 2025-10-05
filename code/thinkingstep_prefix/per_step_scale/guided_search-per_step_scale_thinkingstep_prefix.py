@@ -255,15 +255,15 @@ def main(args):
             'candidate_traj': candidate_traj
         })
 
-        os.makedirs(os.path.dirname(f'/home/pw58/efficient_reasoning/MUR/thinking_step_prefix/{args.file_name}.json'), exist_ok=True)
-        with open(f'/home/pw58/efficient_reasoning/MUR/thinking_step_prefix/{args.file_name}.json', 'w') as f:
+        os.makedirs(os.path.dirname(f'result/per_step_scale/{args.file_name}.json'), exist_ok=True)
+        with open(f'result/per_step_scale/{args.file_name}.json', 'w') as f:
             json.dump(all_res, f, indent=4)
 
     end_time = time.time()
     print(f"Total time taken: {end_time - start_time} seconds")
 
-    os.makedirs(os.path.dirname(f'/home/pw58/efficient_reasoning/MUR/thinking_step_prefix/time/{args.file_name}.txt'), exist_ok=True)
-    with open(f'/home/pw58/efficient_reasoning/MUR/thinking_step_prefix/time/{args.file_name}.txt', 'w') as f:
+    os.makedirs(os.path.dirname(f'result/per_step_scale/time/{args.file_name}.txt'), exist_ok=True)
+    with open(f'result/per_step_scale/time/{args.file_name}.txt', 'w') as f:
         f.write(f'\n\n{args.file_name}  time: {end_time - start_time}\n\n')
         f.write(f'all_policy_output_tokens: {all_policy_output_tokens}\n')
         f.write(f'all_critic_output_tokens: {all_critic_output_tokens}\n')
@@ -272,7 +272,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_path', type=str,
-                        default='/home/pw58/efficient_reasoning/MUR/data/gpqa_diamond_test.json')
+                        default='data/gpqa_diamond_test.json')
     parser.add_argument('--gpus', type=int, default=1)
     parser.add_argument('--momentum_rate', type=float, default=0.9)
     parser.add_argument('--max_steps', type=int, default=20)

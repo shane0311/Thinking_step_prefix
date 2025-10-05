@@ -200,15 +200,15 @@ def run(args):
             'candidate_traj': candidate_traj
         })
 
-        os.makedirs(os.path.dirname(f'thinking_step_prefix/{args.file_name}.json'), exist_ok=True)
-        with open(f'thinking_step_prefix/{args.file_name}.json', 'w') as f:
+        os.makedirs(os.path.dirname(f'result/MUR/{args.file_name}.json'), exist_ok=True)
+        with open(f'result/MUR/{args.file_name}.json', 'w') as f:
             json.dump(all_res, f, indent=4)
 
     elapsed = time.time() - start_time
     print(f"Total time taken: {elapsed:.2f} seconds")
 
-    os.makedirs(os.path.dirname(f'thinking_step_prefix/time/{args.file_name}.txt'), exist_ok=True)
-    with open(f'thinking_step_prefix/time/{args.file_name}.txt', 'w') as f:
+    os.makedirs(os.path.dirname(f'result/MUR/time/{args.file_name}.txt'), exist_ok=True)
+    with open(f'result/MUR/time/{args.file_name}.txt', 'w') as f:
         f.write(f"{args.file_name} time: {elapsed:.2f} sec\n")
         f.write(f"All policy output tokens: {total_policy_tokens}\n")
         f.write(f"All teacher output tokens: {total_teacher_tokens}\n")
