@@ -73,9 +73,9 @@ def run(args):
     os.environ['CUDA_VISIBLE_DEVICES'] = str(args.aim_gpu)
 
     policy_model, policy_tokenizer, policy_stop = setup_model_and_tokenizer(
-        args.policy, 0.4)
+        args.policy, 0.6)
     critic_model, critic_tokenizer, critic_stop = setup_model_and_tokenizer(
-        args.critic, 0.9)
+        args.critic, 0.3)
     system_prompt = get_system_prompt(args.data_path)
 
     with open(args.data_path, encoding='utf-8') as f:

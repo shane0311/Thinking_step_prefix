@@ -8,9 +8,9 @@ import torch
 
 from vllm import LLM, SamplingParams
 from transformers import AutoTokenizer
-sys.path.append(os.path.join(os.path.dirname(__file__), "utils"))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
-from generate_prompts import ciritique_last_generation, ciritique_last_generation_math
+from utils.generate_prompts import ciritique_last_generation, ciritique_last_generation_math
 import random, time
 
 random_seed = int(time.time() * 1000) % (2**31)
@@ -168,9 +168,9 @@ def main(args):
 
     # Load models and tokenizers
     policy_model, policy_tokenizer, policy_stop_token = load_model_and_tokenizer(
-        args.policy, gpu_memory_utilization=0.3)
+        args.policy, gpu_memory_utilization=0.6)
     critic_model, critic_tokenizer, critic_stop_token = load_model_and_tokenizer(
-        args.critic, gpu_memory_utilization=0.6)
+        args.critic, gpu_memory_utilization=0.3)
     system_prompt = get_system_prompt(args.data_path)
 
     with open(args.data_path, 'r', encoding='utf-8') as f:
