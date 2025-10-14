@@ -1,0 +1,6 @@
+
+
+llm_as_a_critic-mur/gpqa_diamond/1.7B/1/preifx_len_32  time: 1143.619571685791
+
+all_policy_output_tokens: 153494
+all_critic_output_tokens: 1934

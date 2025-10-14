@@ -1,0 +1,6 @@
+
+
+llm_as_a_critic-per_step_scale/gpqa_diamond/1.7B/2/preifx_len_8  time: 2019.4684653282166
+
+all_policy_output_tokens: 176150
+all_critic_output_tokens: 99234

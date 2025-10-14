@@ -1,0 +1,5 @@
+filename,time,all_policy_output_tokens,all_critic_output_tokens
+preifx_len_16.txt,0.1847987174987793,0.0,0.0
+preifx_len_2.txt,0.1873464584350586,0.0,0.0
+preifx_len_4.txt,0.19972467422485352,0.0,0.0
+preifx_len_8.txt,0.1848621368408203,0.0,0.0

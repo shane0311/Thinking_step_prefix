@@ -89,7 +89,7 @@ def extract_prefix_len(filename):
 
 def main():
     # Base path
-    base_path = "/home/pw58/efficient_reasoning/MUR/thinking_step_prefix/llm_as_a_critic-per_step_scale/gpqa_diamond/4B"
+    base_path = "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/llm_as_a_critic-per_step_scale/gpqa_diamond/1.7B"
     
     # Dictionary to store results: {prefix_len: {folder: accuracy}}
     results = defaultdict(dict)

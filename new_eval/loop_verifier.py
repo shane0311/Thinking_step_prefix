@@ -351,7 +351,7 @@ def evaluate_batch(base_path: str, task: str, atol: float, rtol: float,
     return results
 
 def main():
-    path = "/Users/shanewang/Documents/Rice_project/final/efficient_reasoning/self_consistency/result/1.7B"
+    path = "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/llm_as_a_critic-per_step_scale/aime2025/1.7B"
     p = argparse.ArgumentParser(description="Evaluate accuracy from multiple result JSONs with parameter analysis.")
     
     # Single file mode (original functionality)
@@ -363,7 +363,7 @@ def main():
                    help="Base path containing folders with JSON files (for batch mode).")
     p.add_argument("--folders", type=str, nargs="+", default=["1", "2", "3"],
                    help="List of folder names to process (default: 1 2 3).")
-    p.add_argument("--param_name", type=str, default="aime_2025",
+    p.add_argument("--param_name", type=str, default="preifx_len",
                    help="Parameter name to extract from filenames (default: prefix_len).")
     
     # Common arguments

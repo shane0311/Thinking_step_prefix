@@ -5,8 +5,16 @@ import pandas as pd
 # === Configure your experiment roots here ===
 # Each of these dirs is expected to have subfolders "1", "2", "3"
 base_dirs = [
-    "/Users/shanewang/Documents/Rice_project/final/efficient_reasoning/MUR/thinking_step_prefix/time/use_teacher_model-per_step_scale/gpqa_diamond",
-    "/Users/shanewang/Documents/Rice_project/final/efficient_reasoning/MUR/thinking_step_prefix/time/use_teacher_model-per_step_scale/aime2025",
+    "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/time/guided_search-mur/aime2025/1.7B/cand4",
+    "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/time/guided_search-mur/aime2025/1.7B/cand8",
+    "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/time/guided_search-mur/aime2025/1.7B/cand12",
+    "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/time/guided_search-mur/gpqa_diamond/1.7B/cand4",
+    "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/time/guided_search-mur/gpqa_diamond/1.7B/cand8",
+    "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/time/guided_search-mur/gpqa_diamond/1.7B/cand12",
+    "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/time/llm_as_a_critic-mur/aime2025",
+    "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/time/llm_as_a_critic-mur/gpqa_diamond/1.7B",
+    "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/time/llm_as_a_critic-per_step_scale/aime2025/1.7B",
+    "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/time/llm_as_a_critic-per_step_scale/gpqa_diamond/1.7B",
 ]
 folders = ["1", "2", "3"]
 

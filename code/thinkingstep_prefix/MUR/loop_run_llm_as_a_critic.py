@@ -12,14 +12,14 @@ if __name__ == "__main__":
     # /home/pw58/efficient_reasoning/MUR/res/{file_name}.json
     RES_ROOT = Path("thinking_step_prefix")
 
-    SCRIPT = "code/thinkingstep_prefix/MUR/llm_as_a_critic-per_step_scale_thinkingstep_prefix.py"
+    SCRIPT = "code/thinkingstep_prefix/MUR/llm_as_a_critic-mur_thinkinstep_prefix.py"
 
     failures = []
 
     for i in iterations:
         for prefix_len in thinking_step_prefix_len:
             for scale in scaling_rates:
-                rel_file_stem = f"llm_as_a_critic-mur/gpqa_diamond/{i}/preifx_len_{prefix_len}"
+                rel_file_stem = f"llm_as_a_critic-mur/gpqa_diamond/1.7B/{i}/preifx_len_{prefix_len}"
                 out_json = RES_ROOT / f"{rel_file_stem}.json"
 
                 # Ensure the parent directory exists before running
@@ -35,7 +35,9 @@ if __name__ == "__main__":
                     "--data_path", "data/gpqa_diamond_test.json",
                     "--thinking_step_prefix_length", str(prefix_len),
                     "--scaling_rate", str(scale),
-                    "--aim_gpu", str(1),  # keep your current behavior
+                    "--aim_gpu", '4,5',  # keep your current behavior
+                    "--policy_gpu", str(4),
+                    "--critic_gpu", str(5),
                     "--file_name", rel_file_stem,  # script will add /res/ prefix and .json
                     "--policy", "Qwen/Qwen3-1.7B"
                 ]

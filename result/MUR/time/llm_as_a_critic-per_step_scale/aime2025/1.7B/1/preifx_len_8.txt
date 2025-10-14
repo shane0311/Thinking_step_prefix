@@ -1,0 +1,6 @@
+
+
+llm_as_a_critic-per_step_scale/aime2025/1.7B/1/preifx_len_8  time: 997.7761285305023
+
+all_policy_output_tokens: 72810
+all_critic_output_tokens: 63906

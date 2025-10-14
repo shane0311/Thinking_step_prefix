@@ -1,0 +1,6 @@
+
+
+guided_search-mur/gpqa_diamond/1.7B/cand8/3/preifx_len_16  time: 1396.5541999340057
+
+all_policy_output_tokens: 174505
+all_critic_output_tokens: 0

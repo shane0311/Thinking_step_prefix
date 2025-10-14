@@ -6,20 +6,20 @@ if __name__ == "__main__":
     #candidates = [4,8,12]
     #verify_nums = [1]
     scaling_rates = [0.9]
-    thinking_step_prefix_len = [10, 25, 50, 75, 100, 125, 150, 175, 200]  # 0 for vanilla CoT
+    thinking_step_prefix_len = [2,4,8,16,32,64]  # 0 for vanilla CoT
     iterations = [1,2,3]
 
     # /home/pw58/efficient_reasoning/MUR/res/{file_name}.json
-    RES_ROOT = Path("/home/pw58/efficient_reasoning/MUR/thinking_step_prefix")
+    RES_ROOT = Path("thinking_step_prefix")
 
-    SCRIPT = "/home/pw58/efficient_reasoning/MUR/new_method/llm_as_a_critic-per_step_scale_thinkingstep_prefix.py"
+    SCRIPT = "code/thinkingstep_prefix/per_step_scale/llm_as_a_critic_per_step_scale_thinkingstep_prefix.py"
 
     failures = []
 
     for i in iterations:
         for prefix_len in thinking_step_prefix_len:
             for scale in scaling_rates:
-                rel_file_stem = f"llm_as_a_critic-per_step_scale/gpqa_diamond/4B/{i}/preifx_len_{prefix_len}"
+                rel_file_stem = f"llm_as_a_critic-per_step_scale/aime2025/1.7B/{i}/preifx_len_{prefix_len}"
                 out_json = RES_ROOT / f"{rel_file_stem}.json"
 
                 # Ensure the parent directory exists before running
@@ -32,12 +32,14 @@ if __name__ == "__main__":
 
                 cmd = [
                     "python", SCRIPT,
-                    "--data_path", "/home/pw58/efficient_reasoning/MUR/data/gpqa_diamond_test.json",
+                    "--data_path", "data/aime2025_test.json",
                     "--thinking_step_prefix_length", str(prefix_len),
                     "--scaling_rate", str(scale),
-                    "--aim_gpu", str(1),  # keep your current behavior
+                    "--aim_gpu", '6,7',  # keep your current behavior
+                    "--policy_gpu", str(6),
+                    "--critic_gpu", str(7),
                     "--file_name", rel_file_stem,  # script will add /res/ prefix and .json
-                    "--policy", "Qwen/Qwen3-4B"
+                    "--policy", "Qwen/Qwen3-1.7B"
                 ]
 
                 print("Running:", " ".join(cmd))

@@ -5,6 +5,7 @@ import argparse
 import time
 import sys
 import torch
+from contextlib import contextmanager
 
 from vllm import LLM, SamplingParams
 from transformers import AutoTokenizer
@@ -22,8 +23,20 @@ if torch.cuda.is_available():
     torch.cuda.manual_seed(random_seed)
     torch.cuda.manual_seed_all(random_seed)
 
-def load_model_and_tokenizer(model_dir, gpu_memory_utilization=0.6):
-    model = LLM(model=model_dir, tensor_parallel_size=1, max_model_len=8096*2,
+@contextmanager
+def visible(devs: str):
+    old = os.environ.get("CUDA_VISIBLE_DEVICES", "")
+    os.environ["CUDA_VISIBLE_DEVICES"] = devs
+    try:
+        yield
+    finally:
+        if old == "":
+            os.environ.pop("CUDA_VISIBLE_DEVICES", None)
+        else:
+            os.environ["CUDA_VISIBLE_DEVICES"] = old
+
+def load_model_and_tokenizer(model_dir, tensor_parallel_size=1, gpu_memory_utilization=0.6):
+    model = LLM(model=model_dir, tensor_parallel_size=tensor_parallel_size, max_model_len=8096*2,
                 trust_remote_code=True, gpu_memory_utilization=gpu_memory_utilization)
     tokenizer = AutoTokenizer.from_pretrained(
         model_dir, trust_remote_code=True)
@@ -166,11 +179,20 @@ def select_best_prefix_candidate(critic_model, tokenizer, question, traj, prefix
 def main(args):
     os.environ['CUDA_VISIBLE_DEVICES'] = str(args.aim_gpu)
 
-    # Load models and tokenizers
-    policy_model, policy_tokenizer, policy_stop_token = load_model_and_tokenizer(
-        args.policy, gpu_memory_utilization=0.6)
-    critic_model, critic_tokenizer, critic_stop_token = load_model_and_tokenizer(
-        args.critic, gpu_memory_utilization=0.3)
+    with visible(args.policy_gpu):
+        policy_model, policy_tokenizer, policy_stop_token = load_model_and_tokenizer(
+            args.policy,
+            tensor_parallel_size=1,
+            gpu_memory_utilization=0.9
+        )
+    
+    # Critic on GPU 1 (one GPU, tp=1, util=0.9)
+    with visible(args.critic_gpu):
+        critic_model, critic_tokenizer, critic_stop_token = load_model_and_tokenizer(
+            args.critic,
+            tensor_parallel_size=1,
+            gpu_memory_utilization=0.9
+        )
     system_prompt = get_system_prompt(args.data_path)
 
     with open(args.data_path, 'r', encoding='utf-8') as f:
@@ -297,7 +319,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_path', type=str,
                         default='data/gpqa_diamond_test.json')
-    parser.add_argument('--gpus', type=int, default=1)
+    parser.add_argument('--gpus', type=int, default=2)
     parser.add_argument('--momentum_rate', type=float, default=0.9)
     parser.add_argument('--max_steps', type=int, default=20)
     parser.add_argument('--file_name', type=str,
@@ -305,12 +327,14 @@ if __name__ == "__main__":
     parser.add_argument('--candidate_num', type=int, default=4)
     parser.add_argument('--verify_num', type=int, default=1)
     parser.add_argument('--scaling_rate', type=float, default=0.9)
-    parser.add_argument('--aim_gpu', type=int, default=0)
+    parser.add_argument('--aim_gpu', type=str, default='0,1')
     parser.add_argument('--policy', type=str, default='Qwen/Qwen3-1.7B')
     parser.add_argument('--critic', type=str, default='GenPRM/GenPRM-1.5B')
     # New parameter for prefix length
     parser.add_argument('--thinking_step_prefix_length', type=int, default=0,
                         help='Number of tokens to generate for thinking step prefixes')
+    parser.add_argument("--policy_gpu", type=str, default="0")
+    parser.add_argument("--critic_gpu", type=str, default="1")
     args = parser.parse_args()
 
     main(args)

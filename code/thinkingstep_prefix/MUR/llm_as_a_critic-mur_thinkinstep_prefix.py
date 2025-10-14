@@ -5,6 +5,8 @@ import argparse
 import time
 import sys
 import torch
+import re
+from contextlib import contextmanager
 
 from vllm import LLM, SamplingParams
 from transformers import AutoTokenizer
@@ -22,9 +24,21 @@ if torch.cuda.is_available():
     torch.cuda.manual_seed(random_seed)
     torch.cuda.manual_seed_all(random_seed)
 
+@contextmanager
+def visible(devs: str):
+    old = os.environ.get("CUDA_VISIBLE_DEVICES", "")
+    os.environ["CUDA_VISIBLE_DEVICES"] = devs
+    try:
+        yield
+    finally:
+        if old == "":
+            os.environ.pop("CUDA_VISIBLE_DEVICES", None)
+        else:
+            os.environ["CUDA_VISIBLE_DEVICES"] = old
 
-def setup_model_and_tokenizer(model_path, gpu_mem):
-    model = LLM(model=model_path, tensor_parallel_size=1, max_model_len=8096*2,
+
+def setup_model_and_tokenizer(model_path, gpu_mem, tensor_parallel_size):
+    model = LLM(model=model_path, tensor_parallel_size=tensor_parallel_size, max_model_len=8096*2,
                 trust_remote_code=True, gpu_memory_utilization=gpu_mem)
     tokenizer = AutoTokenizer.from_pretrained(
         model_path, trust_remote_code=True)
@@ -72,17 +86,25 @@ def run(args):
 
     os.environ['CUDA_VISIBLE_DEVICES'] = str(args.aim_gpu)
 
-    policy_model, policy_tokenizer, policy_stop = setup_model_and_tokenizer(
-        args.policy, 0.6)
-    critic_model, critic_tokenizer, critic_stop = setup_model_and_tokenizer(
-        args.critic, 0.3)
+    with visible(args.policy_gpu):
+        policy_model, policy_tokenizer, policy_stop_token = setup_model_and_tokenizer(
+            args.policy,
+            tensor_parallel_size=1,
+            gpu_mem=0.9
+        )
+    with visible(args.critic_gpu):
+        critic_model, critic_tokenizer, critic_stop_token = setup_model_and_tokenizer(
+            args.critic,
+            tensor_parallel_size=1,
+            gpu_mem=0.9
+        )
     system_prompt = get_system_prompt(args.data_path)
 
     with open(args.data_path, encoding='utf-8') as f:
         test_data = json.load(f)
 
     # Approximate tokens for prefix (rough estimate: 1 token ≈ 4 characters)
-    prefix_max_tokens = max(1, args.thinking_step_prefix_length // 4)
+    prefix_max_tokens = max(1, args.thinking_step_prefix_length)
 
     all_res = []
     total_policy_tokens = total_critic_tokens = 0
@@ -100,10 +122,14 @@ def run(args):
                 base_prompt = apply_chat(policy_tokenizer, [
                     {'role': 'system', 'content': system_prompt},
                     {'role': 'user', 'content': f"Q: {question}\nAlways end your solution with the phrase 'the answer is' followed by your final answer. Start your solution with 'Step{step}:'\n"}
-                ], policy_stop)
+                ], policy_stop_token)
                 
                 if step > 0:
-                    prompt = base_prompt + '\n' + '\n'.join(current_traj) + f'\nStep{step}:'
+                    traj_str = '\n'.join([
+                        f"Step{t['step_idx']}: {t['completed_step']}" if isinstance(t, dict) 
+                        else t for t in current_traj
+                    ])
+                    prompt = base_prompt + '\n' + traj_str + f'\nStep{step}:'
                 else:
                     prompt = base_prompt + '\nStep0:'
 
@@ -146,7 +172,7 @@ def run(args):
                         {'role': 'system',
                             'content': prompt_dict['system_prompt']},
                         {'role': 'user', 'content': prompt_dict['user_prompt']}
-                    ], critic_stop)
+                    ], critic_stop_token)
 
                     analyze_input = critic_prompt + \
                         f"\n<analyze>\nLet's analyze the paragraph {step} step by step: "
@@ -185,7 +211,7 @@ def run(args):
                                 'content': prev_traj_str + f'\nStep{step}: {step_prefix}'},
                             {'role': 'user', 'content': f"\nYour reasoning start is incorrect.\n{analyze_content}\nPlease revise the beginning of your solution."},
                             {'role': 'assistant', 'content': f"Refined Step{step}: "}
-                        ], policy_stop, add_gen=False)
+                        ], policy_stop_token, add_gen=False)
 
                         revised_prefix_outputs = policy_model.generate(revision_prompt, SamplingParams(
                             max_tokens=prefix_max_tokens, temperature=0.6, logprobs=1))
@@ -240,7 +266,7 @@ def run(args):
                 final_prompt = apply_chat(policy_tokenizer, [
                     {'role': 'system', 'content': system_prompt},
                     {'role': 'user', 'content': f"Q: {question}\nAlways end your solution with the phrase 'the answer is' followed by your final answer. Start your solution with 'Step{step}:'\n"}
-                ], policy_stop) + '\n' + traj_str + f'\nStep{step}:'
+                ], policy_stop_token) + '\n' + traj_str + f'\nStep{step}:'
                 outputs = policy_model.generate(final_prompt, SamplingParams(
                     max_tokens=8096, temperature=0.6, logprobs=1))
                 final_text = outputs[0].outputs[0].text.strip()
@@ -289,8 +315,10 @@ if __name__ == "__main__":
                         help='Length of step prefix in characters. Model generates and validates this prefix before completing the full step.')
     parser.add_argument('--file_name', type=str,
                         default='llm_as_a_critic-mur.json')
-    parser.add_argument('--aim_gpu', type=int, default=1)
-    parser.add_argument('--policy', type=str, default='Qwen3-1.7B')
-    parser.add_argument('--critic', type=str, default='genprm1.5B')
+    parser.add_argument('--aim_gpu', type=str, default='0,1')
+    parser.add_argument("--policy_gpu", type=str, default="0")
+    parser.add_argument("--critic_gpu", type=str, default="1")
+    parser.add_argument('--policy', type=str, default='Qwen/Qwen3-1.7B')
+    parser.add_argument('--critic', type=str, default='GenPRM/GenPRM-1.5B')
     args = parser.parse_args()
     run(args)

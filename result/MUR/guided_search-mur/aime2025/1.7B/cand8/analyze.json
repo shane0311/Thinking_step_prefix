@@ -1,0 +1,282 @@
+{
+  "summary": {
+    "4": {
+      "1": {
+        "accuracy": 0.03333333333333333,
+        "correct": 1,
+        "total": 30,
+        "filename": "preifx_len_4.json"
+      },
+      "2": {
+        "accuracy": 0.06666666666666667,
+        "correct": 2,
+        "total": 30,
+        "filename": "preifx_len_4.json"
+      },
+      "3": {
+        "accuracy": 0.1,
+        "correct": 3,
+        "total": 30,
+        "filename": "preifx_len_4.json"
+      }
+    },
+    "8": {
+      "1": {
+        "accuracy": 0.06666666666666667,
+        "correct": 2,
+        "total": 30,
+        "filename": "preifx_len_8.json"
+      },
+      "2": {
+        "accuracy": 0.1,
+        "correct": 3,
+        "total": 30,
+        "filename": "preifx_len_8.json"
+      },
+      "3": {
+        "accuracy": 0.13333333333333333,
+        "correct": 4,
+        "total": 30,
+        "filename": "preifx_len_8.json"
+      }
+    },
+    "64": {
+      "1": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 30,
+        "filename": "preifx_len_64.json"
+      },
+      "2": {
+        "accuracy": 0.03333333333333333,
+        "correct": 1,
+        "total": 30,
+        "filename": "preifx_len_64.json"
+      },
+      "3": {
+        "accuracy": 0.03333333333333333,
+        "correct": 1,
+        "total": 30,
+        "filename": "preifx_len_64.json"
+      }
+    },
+    "32": {
+      "1": {
+        "accuracy": 0.06666666666666667,
+        "correct": 2,
+        "total": 30,
+        "filename": "preifx_len_32.json"
+      },
+      "2": {
+        "accuracy": 0.06666666666666667,
+        "correct": 2,
+        "total": 30,
+        "filename": "preifx_len_32.json"
+      },
+      "3": {
+        "accuracy": 0.06666666666666667,
+        "correct": 2,
+        "total": 30,
+        "filename": "preifx_len_32.json"
+      }
+    },
+    "2": {
+      "1": {
+        "accuracy": 0.06666666666666667,
+        "correct": 2,
+        "total": 30,
+        "filename": "preifx_len_2.json"
+      },
+      "2": {
+        "accuracy": 0.06666666666666667,
+        "correct": 2,
+        "total": 30,
+        "filename": "preifx_len_2.json"
+      },
+      "3": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 30,
+        "filename": "preifx_len_2.json"
+      }
+    },
+    "16": {
+      "1": {
+        "accuracy": 0.06666666666666667,
+        "correct": 2,
+        "total": 30,
+        "filename": "preifx_len_16.json"
+      },
+      "2": {
+        "accuracy": 0.03333333333333333,
+        "correct": 1,
+        "total": 30,
+        "filename": "preifx_len_16.json"
+      },
+      "3": {
+        "accuracy": 0.1,
+        "correct": 3,
+        "total": 30,
+        "filename": "preifx_len_16.json"
+      }
+    }
+  },
+  "all_files": [
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/1/preifx_len_4.json",
+      "param_value": "4",
+      "folder": "1",
+      "accuracy": 0.03333333333333333,
+      "correct": 1,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/1/preifx_len_8.json",
+      "param_value": "8",
+      "folder": "1",
+      "accuracy": 0.06666666666666667,
+      "correct": 2,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/1/preifx_len_64.json",
+      "param_value": "64",
+      "folder": "1",
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/1/preifx_len_32.json",
+      "param_value": "32",
+      "folder": "1",
+      "accuracy": 0.06666666666666667,
+      "correct": 2,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/1/preifx_len_2.json",
+      "param_value": "2",
+      "folder": "1",
+      "accuracy": 0.06666666666666667,
+      "correct": 2,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/1/preifx_len_16.json",
+      "param_value": "16",
+      "folder": "1",
+      "accuracy": 0.06666666666666667,
+      "correct": 2,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/2/preifx_len_4.json",
+      "param_value": "4",
+      "folder": "2",
+      "accuracy": 0.06666666666666667,
+      "correct": 2,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/2/preifx_len_8.json",
+      "param_value": "8",
+      "folder": "2",
+      "accuracy": 0.1,
+      "correct": 3,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/2/preifx_len_64.json",
+      "param_value": "64",
+      "folder": "2",
+      "accuracy": 0.03333333333333333,
+      "correct": 1,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/2/preifx_len_32.json",
+      "param_value": "32",
+      "folder": "2",
+      "accuracy": 0.06666666666666667,
+      "correct": 2,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/2/preifx_len_2.json",
+      "param_value": "2",
+      "folder": "2",
+      "accuracy": 0.06666666666666667,
+      "correct": 2,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/2/preifx_len_16.json",
+      "param_value": "16",
+      "folder": "2",
+      "accuracy": 0.03333333333333333,
+      "correct": 1,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/3/preifx_len_4.json",
+      "param_value": "4",
+      "folder": "3",
+      "accuracy": 0.1,
+      "correct": 3,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/3/preifx_len_8.json",
+      "param_value": "8",
+      "folder": "3",
+      "accuracy": 0.13333333333333333,
+      "correct": 4,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/3/preifx_len_64.json",
+      "param_value": "64",
+      "folder": "3",
+      "accuracy": 0.03333333333333333,
+      "correct": 1,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/3/preifx_len_32.json",
+      "param_value": "32",
+      "folder": "3",
+      "accuracy": 0.06666666666666667,
+      "correct": 2,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/3/preifx_len_2.json",
+      "param_value": "2",
+      "folder": "3",
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 30
+    },
+    {
+      "file_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8/3/preifx_len_16.json",
+      "param_value": "16",
+      "folder": "3",
+      "accuracy": 0.1,
+      "correct": 3,
+      "total": 30
+    }
+  ],
+  "parameters": {
+    "base_path": "/Users/shanewang/Documents/Thinking_step_prefix/result/MUR/guided_search-mur/aime2025/1.7B/cand8",
+    "param_name": "preifx_len",
+    "folders": [
+      "1",
+      "2",
+      "3"
+    ],
+    "task": "auto",
+    "atol": 1e-08,
+    "rtol": 0.0
+  }
+}
